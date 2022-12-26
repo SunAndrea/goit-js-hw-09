@@ -1,6 +1,7 @@
 import Notiflix from 'notiflix';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+const timerEl = document.querySelector(`#datetime-picker`);
 const btnEl = document.querySelector(`[data-start]`);
 const daysEl = document.querySelector(`[data-days]`);
 const hoursEl = document.querySelector(`[data-hours]`);
@@ -50,6 +51,7 @@ function convertMs(ms) {
 }
 
 function onTimerStarter(evt) {
+  timerEl.disabled = true;
   intervalId = setInterval(() => {
     timeDifference = pickedTime.getTime() - Date.now();
 
@@ -57,7 +59,9 @@ function onTimerStarter(evt) {
       clearInterval(intervalId);
       return;
     }
+
     const dataForTimer = convertMs(timeDifference);
+
     daysEl.textContent = addLeadingZero(dataForTimer.days);
     hoursEl.textContent = addLeadingZero(dataForTimer.hours);
     minutesEl.textContent = addLeadingZero(dataForTimer.minutes);
