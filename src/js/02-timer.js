@@ -24,6 +24,7 @@ const options = {
       Notiflix.Notify.failure(`Please choose a date in the future`);
       btnEl.disabled = true;
     }
+    btnEl.disabled = false;
   },
 };
 
@@ -45,7 +46,7 @@ function convertMs(ms) {
   // Remaining seconds
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
-  return (dataForTimer = { days, hours, minutes, seconds });
+  return { days, hours, minutes, seconds };
 }
 
 function onTimerStarter(evt) {
@@ -53,10 +54,10 @@ function onTimerStarter(evt) {
     timeDifference = pickedTime.getTime() - Date.now();
 
     if (timeDifference <= 0) {
-      clearInterval(timeDifference);
+      clearInterval(intervalId);
       return;
     }
-    convertMs(timeDifference);
+    const dataForTimer = convertMs(timeDifference);
     daysEl.textContent = addLeadingZero(dataForTimer.days);
     hoursEl.textContent = addLeadingZero(dataForTimer.hours);
     minutesEl.textContent = addLeadingZero(dataForTimer.minutes);
