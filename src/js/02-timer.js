@@ -19,13 +19,15 @@ const options = {
   minuteIncrement: 1,
 
   onClose(selectedDates) {
-    pickedTime = selectedDates[0];
+    pickedTime = selectedDates[0].getTime();
 
-    if (selectedDates[0] <= Date.now()) {
-      Notiflix.Notify.failure(`Please choose a date in the future`);
+    if (pickedTime <= Date.now()) {
       btnEl.disabled = true;
+
+      Notiflix.Notify.failure(`Please choose a date in the future`);
+    } else {
+      btnEl.disabled = false;
     }
-    btnEl.disabled = false;
   },
 };
 
@@ -52,8 +54,9 @@ function convertMs(ms) {
 
 function onTimerStarter(evt) {
   timerEl.disabled = true;
+  btnEl.disabled = true;
   intervalId = setInterval(() => {
-    timeDifference = pickedTime.getTime() - Date.now();
+    timeDifference = pickedTime - Date.now();
 
     if (timeDifference <= 0) {
       clearInterval(intervalId);
