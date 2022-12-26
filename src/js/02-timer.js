@@ -70,7 +70,6 @@ function onTimerStarter(evt) {
   btnEl.disabled = true;
   intervalId = setInterval(() => {
     timeDifference = pickedTime - Date.now();
-    console.log(timeDifference);
     if (timeDifference <= 0) {
       clearInterval(intervalId);
       return;
