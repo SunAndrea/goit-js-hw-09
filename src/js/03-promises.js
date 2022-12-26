@@ -20,7 +20,7 @@ function onFormCreatePromise(evt) {
   const step = Number(evt.target.step.value);
   const amount = Number(evt.target.amount.value);
 
-  for (let i = 0; i < amount; i++) {
+  for (let i = 0; i < amount; i++, delay += step) {
     createPromise(i + 1, delay)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(
@@ -32,7 +32,6 @@ function onFormCreatePromise(evt) {
           `❌ Rejected promise ${position} in ${delay}ms`
         );
       });
-    delay += step;
   }
 }
 
