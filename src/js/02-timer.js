@@ -17,7 +17,6 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-
   onClose(selectedDates) {
     pickedTime = selectedDates[0].getTime();
 
@@ -29,7 +28,21 @@ const options = {
       btnEl.disabled = false;
     }
   },
+  onOpen(selectedDates) {
+    pickedTime = selectedDates[0].getTime();
+
+    if (pickedTime === null) {
+      btnEl.disabled = true;
+    }
+  },
 };
+
+function disabledBtnOnRestart() {
+  if (pickedTime === null) {
+    btnEl.disabled = true;
+  }
+}
+disabledBtnOnRestart();
 
 flatpickr(`#datetime-picker`, options);
 
@@ -57,7 +70,7 @@ function onTimerStarter(evt) {
   btnEl.disabled = true;
   intervalId = setInterval(() => {
     timeDifference = pickedTime - Date.now();
-
+    console.log(timeDifference);
     if (timeDifference <= 0) {
       clearInterval(intervalId);
       return;
